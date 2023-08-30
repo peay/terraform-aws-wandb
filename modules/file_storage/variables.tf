@@ -3,6 +3,18 @@ variable "namespace" {
   description = "Friendly name prefix used for tagging and naming AWS resources."
 }
 
+variable "bucket_cors_origins" {
+  description = "Allowed origins for bucket CORS policy"
+  type = list(string)
+  default = ["*"]
+}
+
+variable "bucket_key_enabled" {
+  description = "Whether to enable S3 Bucket Keys for SSE-KMS encryption"
+  type        = bool
+  default     = null
+}
+
 variable "sse_algorithm" {
   description = "The server-side encryption algorithm to use. Valid values are `AES256` and `aws:kms`"
   type        = string

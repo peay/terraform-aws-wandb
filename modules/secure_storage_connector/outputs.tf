@@ -7,6 +7,6 @@ output "bucket_id" {
 }
 
 output "bucket_kms_key" {
-  value = var.create_kms_key ? aws_kms_key.key[0] : null
+  value = local.should_create_kms_key ? aws_kms_key.key[0] : null
 }
 

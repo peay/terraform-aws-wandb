@@ -1,7 +1,7 @@
 data "aws_caller_identity" "current" {}
 
 resource "aws_kms_key" "key" {
-  count       = var.create_kms_key ? 1 : 0
+  count       = local.should_create_kms_key ? 1 : 0
   key_usage   = "ENCRYPT_DECRYPT"
   description = "Wandb managed key to encrypt and decrypt file storage"
 
@@ -37,8 +37,8 @@ module "file_storage" {
   source = "../../modules/file_storage"
 
   namespace     = var.namespace
-  sse_algorithm = "aws:kms"
-  kms_key_arn   = var.create_kms_key ? aws_kms_key.key[0].arn : null
+  sse_algorithm = var.sse_algorithm
+  kms_key_arn   = local.should_create_kms_key ? aws_kms_key.key[0].arn : null
 
   create_queue = false
 
